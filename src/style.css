@@ -1,0 +1,86 @@
+:root {
+  font-family: system-ui, sans-serif;
+  font-size: 1rem;
+}
+
+* {
+  box-sizing: inherit;
+}
+
+body,
+h1,
+h2,
+p {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  box-sizing: border-box;
+  min-height: 100svh;
+
+  display: flex;
+  flex-direction: column;
+
+  background-image: linear-gradient(
+    to right,
+    hsl(0, 70%, 40%),
+    hsl(30, 70%, 40%),
+    hsl(60, 70%, 40%),
+    hsl(90, 70%, 40%),
+    hsl(120, 70%, 40%),
+    hsl(150, 70%, 40%),
+    hsl(180, 70%, 40%),
+    hsl(210, 70%, 40%),
+    hsl(240, 70%, 40%),
+    hsl(270, 70%, 40%),
+    hsl(300, 70%, 40%),
+    hsl(330, 70%, 40%),
+    hsl(360, 70%, 40%)
+  );
+  background-size: 2000% 100%;
+  background-position: 0 0;
+  animation: 1200s background-slide linear infinite;
+}
+@keyframes background-slide {
+  100% {
+    background-position: 2000% 0;
+  }
+}
+h1 {
+  margin-top: 15vh;
+  margin-bottom: 10vh;
+
+  font-size: 3rem;
+  letter-spacing: -0.02em;
+  color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+}
+
+main {
+  align-self: center;
+  padding: 0.5rem;
+  width: 16rem;
+  min-height: 16rem;
+
+  display: grid;
+  gap: 1rem;
+  place-items: center;
+  align-content: center;
+  text-align: center;
+
+  color: white;
+  background-color: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 1rem;
+  box-shadow: 0 16px 64px 0 rgba(0, 0, 0, 50%);
+
+  font-size: 1.25rem;
+  font-variant-numeric: tabular-nums;
+}
+
+button {
+  all: unset;
+  text-decoration: underline;
+  cursor: pointer;
+}
