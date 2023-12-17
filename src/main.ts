@@ -19,9 +19,8 @@ try {
   const packed = qpack(url.searchParams);
   console.log("compressed from", url.search.length, "to", packed.length);
   if (packed.length < url.search.length) {
-    const u = new URL(url);
     url.search = packed;
-    let hash = u.toString();
+    let hash = url.toString();
     if (hash.startsWith(window.PREFIX)) hash = hash.slice(window.PREFIX.length);
     location.hash = hash;
   }
