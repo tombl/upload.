@@ -1,6 +1,7 @@
 import { base64ToBytes, bytesToBase64 } from "byte-base64";
 import { hexToUint8Array, uint8ArrayToHex } from "uint8array-extras";
 
+// append only
 const DICT = [
   "X-Amz-Algorithm",
   "AWS4-HMAC-SHA256",
@@ -12,7 +13,8 @@ const DICT = [
   "X-Amz-SignedHeaders",
   "host",
   "X-Amz-Signature",
-  // append only
+  "x-id",
+  "PutObject",
 ];
 
 const enum TAGS {

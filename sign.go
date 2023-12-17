@@ -7,43 +7,50 @@ import (
 	"os"
 	"time"
 
-	"github.com/minio/minio-go/v7"
-	"github.com/minio/minio-go/v7/pkg/credentials"
+	"github.com/aws/aws-sdk-go-v2/config"
+	"github.com/aws/aws-sdk-go-v2/service/s3"
 )
 
 func main() {
-	var region, endpoint, bucket, object, duration string
-	flag.StringVar(&region, "region", "", "the region the bucket is stored in")
-	flag.StringVar(&endpoint, "endpoint", "", "the address and port of the endpoint")
-	flag.StringVar(&bucket, "bucket", "", "the name of the bucket")
-	flag.StringVar(&object, "object", "", "the path to the file")
-	flag.StringVar(&duration, "duration", "24h", "how long the URL should last")
+	bucket := flag.String("bucket", "", "the name of the bucket")
+	object := flag.String("object", "", "the object key")
+	profile := flag.String("profile", "", "the AWS credentials profile to use")
+	rawDuration := flag.String("duration", "24h", "how long until the presigned URL should expire")
 	flag.Parse()
-	if region == "" || endpoint == "" || bucket == "" || object == "" {
+
+	if *bucket == "" || *object == "" {
 		flag.Usage()
 		os.Exit(1)
 	}
 
-	parsedDuration, err := time.ParseDuration(duration)
+	duration, err := time.ParseDuration(*rawDuration)
 	if err != nil {
 		fmt.Printf("parsing duration: %v\n", err)
 		os.Exit(1)
 	}
 
-	client, err := minio.New(endpoint, &minio.Options{
-		Creds:  credentials.NewEnvAWS(),
-		Region: region,
-	})
+	opts := [](func(*config.LoadOptions) error){}
+	if *profile != "" {
+		opts = append(opts, config.WithSharedConfigProfile(*profile))
+	}
+
+	cfg, err := config.LoadDefaultConfig(context.Background(), opts...)
 	if err != nil {
-		fmt.Printf("connecting: %v\n", err)
+		fmt.Printf("unable to load AWS config: %v\n", err)
 		os.Exit(1)
 	}
 
-	url, err := client.PresignedPutObject(context.Background(), bucket, object, parsedDuration)
+	presign := s3.NewPresignClient(s3.NewFromConfig(cfg))
+
+	request, err := presign.PresignPutObject(
+		context.Background(),
+		&s3.PutObjectInput{Bucket: bucket, Key: object},
+		s3.WithPresignExpires(duration),
+	)
 	if err != nil {
-		fmt.Printf("creating URL: %v\n", err)
+		fmt.Printf("signing URL: %v\n", err)
 		os.Exit(1)
 	}
 
-	fmt.Println(url.String())
+	fmt.Println(request.URL)
 }
