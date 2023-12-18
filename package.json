@@ -12,6 +12,7 @@
     "vite": "^5.0.10"
   },
   "dependencies": {
+    "aws4fetch": "^1.0.17",
     "byte-base64": "^1.1.0",
     "fflate": "^0.8.1",
     "pretty-bytes": "^6.1.1",
@@ -23,6 +24,9 @@
   "pnpm": {
     "overrides": {
       "svelte": "5.0.0-next.26"
+    },
+    "patchedDependencies": {
+      "aws4fetch@1.0.17": "patches/aws4fetch@1.0.17.patch"
     }
   }
 }

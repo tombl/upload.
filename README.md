@@ -54,7 +54,7 @@ automatically zipped together.
 This is a tiny tool right now, built to meet very slim requirements. Here's a
 handful of polish/feature ideas:
 
-- A second page to sign URLs in the browser
+- ~~A second page to sign URLs in the browser~~
 - An upload speed graph
 - Multipart uploads
   - Faster and resumable

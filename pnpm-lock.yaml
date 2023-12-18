@@ -7,7 +7,15 @@ settings:
 overrides:
   svelte: 5.0.0-next.26
 
+patchedDependencies:
+  aws4fetch@1.0.17:
+    hash: iupnowfkefao6glqvjzxpmz7fi
+    path: patches/aws4fetch@1.0.17.patch
+
 dependencies:
+  aws4fetch:
+    specifier: ^1.0.17
+    version: 1.0.17(patch_hash=iupnowfkefao6glqvjzxpmz7fi)
   byte-base64:
     specifier: ^1.1.0
     version: 1.1.0
@@ -477,6 +485,11 @@ packages:
     resolution: {integrity: sha512-b0P0sZPKtyu8HkeRAfCq0IfURZK+SuwMjY1UXGBU27wpAiTwQAIlq56IbIO+ytk/JjS1fMR14ee5WBBfKi5J6A==}
     dependencies:
       dequal: 2.0.3
+
+  /aws4fetch@1.0.17(patch_hash=iupnowfkefao6glqvjzxpmz7fi):
+    resolution: {integrity: sha512-4IbOvsxqxeOSxI4oA+8xEO8SzBMVlzbSTgGy/EF83rHnQ/aKtP6Sc6YV/k0oiW0mqrcxuThlbDosnvetGOuO+g==}
+    dev: false
+    patched: true
 
   /axobject-query@4.0.0:
     resolution: {integrity: sha512-+60uv1hiVFhHZeO+Lz0RYzsVHy5Wr1ayX0mwda9KPDVLNJgZ1T9Ny7VmFbLDzxsH0D87I86vgj3gFrjTJUYznw==}
