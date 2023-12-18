@@ -21,24 +21,23 @@ $ aws s3api put-bucket-cors --bucket uploads --cors-configuration '{
 If you want to deploy your own copy of the site, deploy
 [it](https://nightly.link/tombl/upload./workflows/build/main/site.zip) to your
 static host of choice (S3?), substituting `PREFIX = "https://YOUR_S3_BUCKET/"`
-at the top of `index.html` with your S3 bucket's domain.
+at the top of every `.html` file with your S3 bucket's domain.
 
-Obtain an S3 presigned PUT URL via your favorite method. If you don't have a
-favorite method, this repo contains a go program that can sign URLs for you.
-
-```sh
-$ git clone https://github.com/tombl/upload. upload
-$ cd upload
-$ go build ./sign.go
-$ # takes creds from the aws cli
-$ ./sign -bucket uploads -object example.txt
-https://s3.invalid/example.txt?X-Amz-...
 ```
+$ cd $(mktemp -d)
+$ curl -LO https://nightly.link/tombl/upload./workflows/build/main/site.zip
+$ unzip site.zip
+$ rm site.zip
+$ find . -name "*.html" -exec sed -i 's/YOUR_S3_BUCKET/uploads.s3.invalid/g' {} +
+$ deploy .
+```
+
+To obtain an S3 presigned PUT URL, you can head to <https://upload.on.tombl.net/sign>, optionally substituting your static deployment.
 
 ## Usage
 
 Navigate to
-<https://upload.on.tombl.net/#https://s3.invalid/example.txt?X-Amz-...>,
+<https://upload.on.tombl.net/#https://uploads.s3.invalid/example.txt?X-Amz-...>,
 substituting your presigned URL and optionally your static hosted deployment.
 
 The URL will be compressed via
