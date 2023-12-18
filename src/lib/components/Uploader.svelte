@@ -4,7 +4,7 @@
   import FilePicker from "./FilePicker.svelte";
   import UploadProgress from "./UploadProgress.svelte";
 
-  let { url } = $props<{ url?: string }>();
+  let { signedURL } = $props<{ signedURL: string }>();
 
   let data = $state<
     | { phase: "pick" }
@@ -18,7 +18,7 @@
     let file: Blob = files[0];
     if (files.length > 1) {
       data = { phase: "zipping", current: 0, total: files.length };
-      file = await (await import("./zip")).createZip([...files], (i) => {
+      file = await (await import("../zip")).createZip([...files], (i) => {
         if (data.phase === "zipping") data.current = i + 1;
       });
     }
@@ -43,14 +43,12 @@
     });
 
     const start = Date.now();
-    xhr.open("PUT", url!);
+    xhr.open("PUT", signedURL!);
     xhr.send(file);
   }
 </script>
 
-{#if url === undefined}
-  no permission
-{:else if data.phase == "zipping"}
+{#if data.phase == "zipping"}
   <h2>zipping</h2>
   <p>{data.current}/{data.total}</p>
 {:else if data.phase === "error"}

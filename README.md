@@ -2,7 +2,7 @@
 
 A tiny clientside uploader for s3 presigned URLs.
 
-Built with Svelte 5 and compiled into a single small html file.
+Built with SvelteKit+Svelte 5 and compiled into a single zip.
 
 ## Setup
 

@@ -6,19 +6,13 @@
     </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>upload.</title>
-    <link rel="stylesheet" href="/src/style.css" />
-    <script type="module" src="/src/main.ts"></script>
+    <link rel="icon" href="/favicon.svg">
+    %sveltekit.head%
   </head>
   <body>
     <script>
       document.body.style.animationDelay = `-${1200 * Math.random()}s`;
     </script>
-    <h1>upload.</h1>
-    <main>
-      <noscript>
-        <p>this page<br />requires javascript</p>
-      </noscript>
-    </main>
+    <div style="display:contents">%sveltekit.body%</div>
   </body>
 </html>
