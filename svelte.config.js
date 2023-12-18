@@ -2,6 +2,6 @@ import adapter from "@sveltejs/adapter-static";
 
 export default {
   kit: {
-    adapter: adapter(),
+    adapter: adapter({ fallback: "404.html" }),
   },
 };

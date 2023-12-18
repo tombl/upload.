@@ -57,13 +57,20 @@
   }}
 />
 
-<!-- blocked on https://github.com/sveltejs/svelte/pull/9953
-<noscript><p>this page<br />requires javascript</p></noscript> -->
+<svelte:head>
+  <title>upload.</title>
+</svelte:head>
+<h1>upload.</h1>
 
-{#if !mounted}
-  <Spinner />
-{:else if signed === undefined}
-  you need permission to upload a file
-{:else}
-  <App signedURL={signed.url.toString()} />
-{/if}
+<main>
+  <!-- blocked on https://github.com/sveltejs/svelte/pull/9953
+    <noscript><p>this page<br />requires javascript</p></noscript> -->
+
+  {#if !mounted}
+    <Spinner />
+  {:else if signed === undefined}
+    you need permission<br />to upload a file
+  {:else}
+    <App signedURL={signed.url.toString()} />
+  {/if}
+</main>
