@@ -28,17 +28,17 @@ $ cd $(mktemp -d)
 $ curl -LO https://nightly.link/tombl/upload./workflows/build/main/site.zip
 $ unzip site.zip
 $ rm site.zip
-$ find . -name "*.html" -exec sed -i 's/YOUR_S3_BUCKET/uploads.s3.invalid/g' {} +
+$ find . -name "*.html" -exec sed -i 's/YOUR_S3_BUCKET/your-bucket/g' {} +
 $ deploy .
 ```
 
-To obtain an S3 presigned PUT URL, you can head to <https://upload.on.tombl.net/sign>, optionally substituting your static deployment.
+To obtain an S3 presigned PUT URL, you can head to [https://your-deployment/sign](https://upload.on.tombl.net/sign).
 
 ## Usage
 
 Navigate to
-<https://upload.on.tombl.net/#https://uploads.s3.invalid/example.txt?X-Amz-...>,
-substituting your presigned URL and optionally your static hosted deployment.
+[https://your-deployment/#https://your-bucket/example.txt?X-Amz-...](https://upload.on.tombl.net/#https://your-bucket/example.txt?X-Amz-...),
+substituting your presigned URL after the `#`.
 
 The URL will be compressed via
 [a custom compression scheme](https://github.com/tombl/upload./blob/main/src/qpack.ts)
@@ -60,3 +60,4 @@ handful of polish/feature ideas:
   - Likely requires a backend
 - Text animations inspired by SwiftUI's
   `.contentTransition(.numericText(value:))`
+- Picked file preview (thumbnails etc)

@@ -6,27 +6,19 @@
     "build": "vite build"
   },
   "devDependencies": {
-    "@sveltejs/adapter-static": "^3.0.0",
-    "@sveltejs/kit": "^2.0.2",
-    "@sveltejs/vite-plugin-svelte": "^3.0.1",
-    "vite": "^5.0.10"
+    "@sveltejs/adapter-static": "^3.0.1",
+    "@sveltejs/kit": "^2.5.4",
+    "@sveltejs/vite-plugin-svelte": "^3.0.2",
+    "vite": "^5.1.6"
   },
   "dependencies": {
-    "aws4fetch": "^1.0.17",
+    "aws4fetch": "^1.0.18",
     "byte-base64": "^1.1.0",
-    "fflate": "^0.8.1",
+    "fflate": "^0.8.2",
     "pretty-bytes": "^6.1.1",
     "pretty-ms": "^8.0.0",
     "simple-eta": "^3.0.2",
-    "svelte": "5.0.0-next.26",
+    "svelte": "5.0.0-next.80",
     "uint8array-extras": "^0.5.1"
-  },
-  "pnpm": {
-    "overrides": {
-      "svelte": "5.0.0-next.26"
-    },
-    "patchedDependencies": {
-      "aws4fetch@1.0.17": "patches/aws4fetch@1.0.17.patch"
-    }
   }
 }
