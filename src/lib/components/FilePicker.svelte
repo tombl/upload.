@@ -1,8 +1,8 @@
 <script lang="ts">
   let hovering = $state(false);
-  let input = $state<HTMLInputElement>();
+  let input: HTMLInputElement | undefined = $state();
 
-  let { onsubmit } = $props<{ onsubmit: (files: FileList) => void }>();
+  let { onsubmit }: { onsubmit: (files: FileList) => void } = $props();
 </script>
 
 <input

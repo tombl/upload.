@@ -4,21 +4,21 @@
   import FilePicker from "./FilePicker.svelte";
   import UploadProgress from "./UploadProgress.svelte";
 
-  let { signedURL } = $props<{ signedURL: string }>();
+  let { signedURL }: { signedURL: string } = $props();
 
-  let data = $state<
+  let data:
     | { phase: "pick" }
     | { phase: "zipping"; current: number; total: number }
     | { phase: "error" }
     | { phase: "uploading"; progress?: UploadProgress }
-    | { phase: "done"; time: number; size: number }
-  >({ phase: "pick" });
+    | { phase: "done"; time: number; size: number } = $state({ phase: "pick" });
 
   async function onsubmit(files: FileList) {
     let file: Blob = files[0];
     if (files.length > 1) {
       data = { phase: "zipping", current: 0, total: files.length };
-      file = await (await import("../zip")).createZip([...files], (i) => {
+      const { createZip } = await import("../zip");
+      file = await createZip([...files], (i) => {
         if (data.phase === "zipping") data.current = i + 1;
       });
     }
@@ -63,8 +63,5 @@
 {:else if data.phase === "pick"}
   <FilePicker {onsubmit} />
 {:else}
-  {void (
-    // @ts-expect-error
-    data.phase
-  )}
+  {data satisfies never}
 {/if}

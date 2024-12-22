@@ -6,11 +6,11 @@
   import Spinner from "./Spinner.svelte";
 
   let sent = $state(0);
-  let total = $state<number>();
+  let total: number | undefined = $state();
   let rate = $state(0);
 
   let remaining: number;
-  let debouncedRemaining = $state<number>();
+  let debouncedRemaining: number | undefined = $state();
 
   onMount(() => {
     const interval = setInterval(() => {

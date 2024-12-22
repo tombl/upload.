@@ -1,6 +1,7 @@
 <script lang="ts">
   import Spinner from "$lib/components/Spinner.svelte";
   import App from "$lib/components/Uploader.svelte";
+  import { Hash } from "$lib/hash";
   import { qpack, qunpack } from "$lib/qpack";
 
   let mounted = $state(false);
@@ -8,16 +9,11 @@
     mounted = true;
   });
 
-  let hash = $state(globalThis.location?.hash ?? "");
-
-  $effect(() => {
-    // effects only run on the client
-    if (location.hash !== hash) location.hash = hash!;
-  });
+  const hash = new Hash();
 
   function getURL() {
-    if (!hash) return;
-    const url = new URL(hash.slice(1), window.PREFIX);
+    if (!hash.current) return;
+    const url = new URL(hash.current.slice(1), window.PREFIX);
     try {
       url.search = qunpack(url.search.slice(1)).toString();
       return { url, compressed: true };
@@ -42,20 +38,14 @@
       if (packed.length < signed.url.search.length) {
         const url = new URL(signed.url);
         url.search = packed;
-        hash = url.toString();
-        if (hash.startsWith(window.PREFIX)) {
-          hash = hash.slice(window.PREFIX.length);
+        hash.current = url.toString();
+        if (hash.current.startsWith(window.PREFIX)) {
+          hash.current = hash.current.slice(window.PREFIX.length);
         }
       }
     }
   });
 </script>
-
-<svelte:window
-  on:hashchange={() => {
-    hash = location.hash;
-  }}
-/>
 
 <svelte:head>
   <title>upload.</title>

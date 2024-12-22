@@ -3,30 +3,13 @@
   import { base } from "$app/paths";
   import { AwsV4Signer } from "aws4fetch";
 
-  let accessKeyId = $state(
-    globalThis.localStorage?.getItem("upload.accessKey") ?? ""
-  );
-  $effect(() => {
-    globalThis.localStorage?.setItem("upload.accessKey", accessKeyId);
-  });
-
-  let secretAccessKey = $state("");
-
-  let region = $state(globalThis.localStorage?.getItem("upload.region") ?? "");
-  $effect(() => {
-    globalThis.localStorage?.setItem("upload.region", region);
-  });
-
-  let endpoint = $state(
-    globalThis.localStorage?.getItem("upload.endpoint") || (globalThis.PREFIX ?? "")
-  );
-  $effect(() => {
-    globalThis.localStorage?.setItem("upload.endpoint", endpoint);
-  });
-
-  let object = $state("");
-
-  async function sign() {
+  async function sign({
+    accessKeyId,
+    secretAccessKey,
+    region,
+    endpoint,
+    object,
+  }: Record<string, string>) {
     if (!endpoint.startsWith("http")) endpoint = "https://" + endpoint;
     if (!endpoint.endsWith("/")) endpoint += "/";
 
@@ -39,6 +22,10 @@
       service: "s3",
       signQuery: true,
     });
+
+    localStorage.setItem("upload.accessKey", accessKeyId);
+    localStorage.setItem("upload.region", region);
+    localStorage.setItem("upload.endpoint", endpoint);
     await goto(`${base}/#${(await signer.sign()).url.toString()}`);
   }
 </script>
@@ -52,28 +39,46 @@
   <form
     onsubmit={(e) => {
       e.preventDefault();
-      sign();
+      const formData = new FormData(e.currentTarget);
+      sign(Object.fromEntries(formData) as Record<string, string>);
     }}
   >
     <label>
       <span>access key</span>
-      <input bind:value={accessKeyId} type="text" />
+      <input
+        type="text"
+        name="accessKeyId"
+        defaultValue={globalThis.localStorage?.getItem("upload.accessKey")}
+        required
+      />
     </label>
     <label>
       <span>secret key</span>
-      <input bind:value={secretAccessKey} type="password" />
+      <input name="secretAccessKey" type="password" required />
     </label>
     <label>
       <span>region</span>
-      <input bind:value={region} type="text" />
+      <input
+        type="text"
+        name="region"
+        defaultValue={globalThis.localStorage?.getItem("upload.region")}
+        required
+      />
     </label>
     <label>
       <span>endpoint</span>
-      <input bind:value={endpoint} type="text" />
+      <input
+        type="text"
+        name="endpoint"
+        defaultValue={globalThis.localStorage?.getItem("upload.endpoint") ??
+          globalThis.PREFIX ??
+          ""}
+        required
+      />
     </label>
     <label>
       <span>object</span>
-      <input bind:value={object} type="text" />
+      <input name="object" type="text" required />
     </label>
     <button>sign</button>
   </form>
