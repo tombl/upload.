@@ -41,7 +41,7 @@ Navigate to
 substituting your presigned URL after the `#`.
 
 The URL will be compressed via
-[a custom compression scheme](https://github.com/tombl/upload./blob/main/src/qpack.ts)
+[a custom compression scheme](https://github.com/tombl/upload./blob/main/src/lib/qpack.ts)
 to ~2x shorter.
 
 Copy the new shortened URL from the address bar and send it to your recipient,
