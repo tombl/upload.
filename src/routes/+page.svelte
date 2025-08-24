@@ -53,8 +53,7 @@
 <h1>upload.</h1>
 
 <main>
-  <!-- blocked on https://github.com/sveltejs/svelte/pull/9953
-    <noscript><p>this page<br />requires javascript</p></noscript> -->
+  <noscript><p>this page<br />requires javascript</p></noscript>
 
   {#if !mounted}
     <Spinner />
